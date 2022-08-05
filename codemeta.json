@@ -1,0 +1,59 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "https://spdx.org/licenses/MIT",
+    "codeRepository": "git+https://github.com/jornada-im/climate-metrics",
+    "dateCreated": "2022-08-05",
+    "datePublished": "2022-08-05",
+    "dateModified": "2022-08-05",
+    "downloadUrl": "https://github.com/jornada-im/climate-metrics/archive/refs/heads/main.zip",
+    "issueTracker": "https://github.com/jornada-im/climate-metrics/issues",
+    "name": "climate-metrics",
+    "version": "0.0.1",
+    "description": "Computes derived climate metrics from Jornada Basin LTER (southern NM, USA) and southwest regional weather station data.",
+    "applicationCategory": "climate and meteorology",
+    "funding": "DEB 2025166, DBI 1931143, DBI 1931174",
+    "funder": {
+        "@type": "Organization",
+        "name": "NSF"
+    },
+    "keywords": [
+        "drought index",
+        "anomaly",
+        "derived",
+        "climate",
+        "meteorology",
+        "vapor pressure deficit"
+    ],
+    "programmingLanguage": [
+        "R"
+    ],
+    "softwareRequirements": [
+        "R packages on CRAN: scPDSI, SPEI",
+        "https://github.com/gremau/rclimtools"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0002-2701-4870",
+            "givenName": "Brianda",
+            "familyName": "Hernandez Rosales",
+            "email": "bnhernandez90@outlook.com",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "Environmental Data Initiative"
+            }
+        },
+        {
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0002-3007-8058",
+            "givenName": "Gregory",
+            "familyName": "Maurer",
+            "email": "gmaurer@nmsu.edu",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "Jornada Basin LTER, New Mexico State University"
+            }
+        }
+    ]
+}
