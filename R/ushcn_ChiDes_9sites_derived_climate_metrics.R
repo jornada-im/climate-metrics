@@ -11,19 +11,19 @@
 ############################################################################
 
 library('tidyverse')
-library(dplyr)
-library(ggplot2)
+#library(dplyr)
+#library(ggplot2)
 library(SPEI)
-library(tidyr)
-library(gtools)
+#library(tidyr)
+#library(gtools)
 
 # Get spei tools, if not already installed use:
 # devtools::install_github("gremau/rclimtools")
 # Then load
-# library('rclimtools')
+library('rclimtools')
 
 # Get the dataset
-fname <- './ChihuahuanDesert_USHCN_dataset.csv'   # data set has all 9 sites    
+fname <- './data/ChihuahuanDesert_USHCN_dataset.csv'   # data set has all 9 sites    
 raw <- read_csv(fname, na=c('', 'NaN', 'NA'))
 
 head(raw)
@@ -32,6 +32,10 @@ tail(raw)
 
 stn <- unique(raw$stationid)
 stn
+
+# Check start date for stations
+raw %>% group_by(stationid) %>%
+  summarize(start = min(date))
 
 for (i in 1:length(stn)) {
   # Subset the main dataset and calculate PET
@@ -136,11 +140,12 @@ dat.fin
 
 #### Calculating scPDSI ####
 
-# Package needed to calculate sc-PDSI 
-# Package obtained from CRAN archive: 
+# Package needed to calculate sc-PDSI is in the CRAN archive: 
 # https://cran.r-project.org/src/contrib/Archive/scPDSI/
 # scPDSI package information:
 # https://cran.microsoft.com/snapshot/2020-04-20/web/packages/scPDSI/index.html
+# Download version 1.3, unzip, and install with:
+# install.packages('path/to/scPDSI', repos=NULL, type="source")
 
 library(scPDSI)
 
@@ -160,12 +165,12 @@ combine.df2 <- cbind(dat.fin, sc_pdsi) %>%
 colnames(combine.df2)
 final.df <- combine.df2[,c(2,1,8,9,15,17,7,18)]
 
-write_csv(final.df, '../chihuahuandesert_derived_climate_metrics_1911_2021.csv')
+write_csv(final.df, 'data/chihuahuandesert_derived_climate_metrics_1911_2021.csv')
 
 
 
 #plot SPEI and PDSI 
-library(ggpubr)
+library(cowplot) # This was ggpubr, but cowplot is a little simpler.
 
 ggplot(final.df, aes(x=date))+
   geom_line( aes(y = spei_12mo), color = "blue") +
@@ -183,10 +188,8 @@ pdsi.plot <- ggplot(final.df, aes(x=date))+
   theme_classic()
 pdsi.plot
 
-ggarrange(spei.plot, pdsi.plot, 
-          labels=c("a.","b."),
-          ncol=1, nrow=2, 
-          common.legend = TRUE, font.label = list(size = 10))
+
+plot_grid(spei.plot, pdsi.plot, labels = c('A', 'B'), label_size = 12)
 
 
 
